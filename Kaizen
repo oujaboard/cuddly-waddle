@@ -16,7 +16,7 @@ local label = tab:Label("The fuck is a label", {
 label:ChangeText("Kaizen")
 
 
-local toggle = tab:Toggle("Farm Money", function(bool)
+local toggle = tab:Toggle("Farm Money & Tiny Bit of EXP", function(bool)
     getgenv().MoneyFarmToggled = bool
     if bool then
         autoFarmCash()
