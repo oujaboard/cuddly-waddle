@@ -1,0 +1,106 @@
+getgenv().MoneyFarmToggled = false
+
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jxereas/UI-Libraries/main/athenic_gui_library.lua", true))()
+
+local window = library:CreateWindow("Kaizen")
+
+local tab = window:CreateTab("Autofarm")
+
+local label = tab:Label("The fuck is a label", {
+   BgColor = Color3.fromRGB(20,20,20),
+   TextSize = 18,
+   TextColor = Color3.fromRGB(255,255,255)
+})
+
+label:ChangeText("Kaizen")
+
+
+local toggle = tab:Toggle("Farm Money", function(bool)
+    getgenv().MoneyFarmToggled = bool
+    if bool then
+        autoFarmCash()
+    end
+end)
+toggle:SetToggle(false)
+
+
+
+
+local tab2 = window:CreateTab("Misc")
+
+tab2:Slider("WalkSpeed", 500, function(val)
+     while wait(0.1) do
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = val
+     end
+ end)
+
+ tab2:Slider("JumpPower", 500, function(val)
+    while wait(0.1) do
+       game.Players.LocalPlayer.Character.Humanoid.JumpPower = val
+    end
+end)
+
+
+--FUNCTIONS
+
+function autoFarmCash()
+    spawn(function()
+        while getgenv().MoneyFarmToggled == true do
+            wait(1)
+            
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-264.447815, 155.822479, 427.063385, 0.993763745, 6.16412095e-08, 0.111506008, -6.66409576e-08, 1, 4.11113561e-08, -0.111506008, -4.82858411e-08, 0.993763745)
+            
+            local args = {[1] = "TreeLogSideQuest"}
+            
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))
+            wait(0.15)
+            
+            local args = {[1] = "TreeLogSideQuest", [2] = "quest_prompt"}
+            
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.15)
+            
+            local args = {[1] = "TreeLogSideQuest", [2] = "Yes"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
+            wait(0.15)
+            
+            
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(380.789185, 156.51001, -320.064056, -0.0318551399, -8.96111096e-09, 0.999492466, -2.18758101e-09, 1, 8.89593998e-09, -0.999492466, -1.90308924e-09, -0.0318551399)
+            wait(0.15)
+            
+            
+            local args = {[1] = "TreeLogOtherNPC"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))
+            wait(0.15)
+            
+            
+            local args = {[1] = "TreeLogOtherNPC", [2] = "bring_back"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.15)
+            
+            
+            local args = {[1] = "TreeLogOtherNPC", [2] = "Okay"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
+            wait(0.15)
+            
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-264.447815, 155.822479, 427.063385, 0.993763745, 6.16412095e-08, 0.111506008, -6.66409576e-08, 1, 4.11113561e-08, -0.111506008, -4.82858411e-08, 0.993763745)
+            wait(0.1)
+            
+            
+            local args = {[1] = "TreeLogSideQuest"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))
+            wait(0.1)
+            
+            
+            local args = {[1] = "TreeLogSideQuest", [2] = "quest_reward"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.15)
+            
+            
+            local args = {[1] = "TreeLogSideQuest", [2] = "..."}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
+            wait(0.15)
+        end
+    end)
+end
