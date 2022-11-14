@@ -1,5 +1,8 @@
 getgenv().MoneyFarmToggled = false
+getgenv().Autofarm = false
 
+local Chareee = game:GetService("Players").LocalPlayer.Character
+local Mobs = game:GetService("Workspace").Living.Mobs
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jxereas/UI-Libraries/main/athenic_gui_library.lua", true))()
 
@@ -26,12 +29,22 @@ end)
 toggle:SetToggle(false)
 
 
+local toggle = tab:Toggle("Farm Shroom Quest (DOESNT WORK WITH INVISIBILITY)", function(bool)
+    getgenv().Autofarm = bool
+    if bool then
+        autoFarmSQ()
+    end
+end)
+toggle:SetToggle(false)
+
+
 tab:Button("Invisibility", function()
    local tempPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
    task.wait(0.1)
    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(117.620003, 235.537994, 243.947998, -0.993051589, -3.08575174e-08, -0.117679805, -1.89604723e-08, 1, -1.02216269e-07, 0.117679805, -9.92747644e-08, -0.993051589)
+   task.wait(0.5)
    game:GetService("Players").LocalPlayer.Character.LowerTorso.Root:Destroy()
-   task.wait(0.1)
+   task.wait(1)
    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = tempPos
 end)
 
@@ -112,6 +125,62 @@ function autoFarmCash()
             local args = {[1] = "TreeLogSideQuest", [2] = "..."}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
             task.wait(0.15)
+        end
+    end)
+end
+
+function autoFarmSQ()
+    spawn(function()
+        game.Players.LocalPlayer.Backpack.Fists.Parent = Chareee
+
+        Chareee.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
+        wait(0.1)
+        local args = {[1] = "ShroomSideQuest", [2] = "begin"}
+        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+        wait(0.1)
+        local args = {[1] = "ShroomSideQuest", [2] = "Shrooms"}
+        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+        wait(0.1)
+        local args = {[1] = "ShroomSideQuest", [2] = "Confirm"}
+        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+        wait(0.1)
+        while getgenv().Autofarm == true do
+            task.wait(0.025)
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Shroom" and v.Humanoid.Health > 0 or getgenv().Autofarm == false then
+                    repeat
+                        wait()
+                        Chareee.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,-6,0)
+                        if v.Humanoid.Health <= 0 then
+                            local coutingKills = 0
+                            coutingKills = coutingKills + 1
+                            print(coutingKills)
+                            if coutingKills >= 5 then
+                                getgenv().Autofarm = false
+                                wait(0.01)
+                                Chareee.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
+                                local args = {[1] = "ShroomSideQuest"}
+                                game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                wait(0.1)
+                                local args = {[1] = "ShroomSideQuest", [2] = "talk"}
+                                game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                wait(0.1)
+                                local args = {[1] = "ShroomSideQuest", [2] = "Bye"}
+                                game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                wait(0.1)
+                                getgenv().Autofarm = true
+                                coutingKills = 0
+                            else 
+                            end
+                        end
+                        local args = {[1] = false}
+                        game:GetService("Players").LocalPlayer.Character.Fists.CombatHandler.Attack:FireServer(unpack(args))
+                    until v.Humanoid.Health <= 0 or getgenv().Autofarm == false
+                end
+            end
         end
     end)
 end
