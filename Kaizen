@@ -127,7 +127,7 @@ function autoFarmCash()
             task.wait(0.25)
 
             Chareee.HumanoidRootPart.CFrame = CFrame.new(-457.122192, 388.772766, -534.745667, -0.932645202, 3.74172693e-08, 0.360794902, 5.08153413e-08, 1, 2.76484364e-08, -0.360794902, 4.4120096e-08, -0.932645202)
-            task.wait(60)
+            task.wait(15)
         end
     end)
 end
