@@ -1,8 +1,6 @@
 getgenv().MoneyFarmToggled = false
 getgenv().Autofarm = false
 
-local countingKills = 0
-
 local Chareee = game:GetService("Players").LocalPlayer.Character
 local Mobs = game:GetService("Workspace").Living.Mobs
 
@@ -137,14 +135,15 @@ end
 
 function autoFarmSQ()
     spawn(function()
+        local countingKills = 0
         --[[if game.Players.LocalPlayer.Backpack.Fists.Parent == game.Players.LocalPlayer.Backpack then
             game.Players.LocalPlayer.Backpack.Fists.Parent = Chareee
         else
         end]]
         pcall(function()
-        Chareee.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack.Fists)
+            game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack.Fists)
         end)
-        Chareee.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
         wait(0.1)
         local args = {[1] = "ShroomSideQuest", [2] = "begin"}
         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
@@ -167,8 +166,8 @@ function autoFarmSQ()
                         Chareee.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,-6,0)
                         if v.Humanoid.Health <= 0 then
                             wait(0.1)
-                            local countingKills = countingKills + 5
-                            print(coutingKills)                       
+                            countingKills = countingKills + 1
+                            print(countingKills)     
                             wait(0.1)
                             if countingKills >= 5 then
                                 getgenv().Autofarm = false
