@@ -1,6 +1,8 @@
 getgenv().MoneyFarmToggled = false
 getgenv().Autofarm = false
 
+local countingKills = 0
+
 local Chareee = game:GetService("Players").LocalPlayer.Character
 local Mobs = game:GetService("Workspace").Living.Mobs
 
@@ -73,7 +75,7 @@ function autoFarmCash()
         while getgenv().MoneyFarmToggled == true do
             task.wait(1)
             
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-264.447815, 155.822479, 427.063385, 0.993763745, 6.16412095e-08, 0.111506008, -6.66409576e-08, 1, 4.11113561e-08, -0.111506008, -4.82858411e-08, 0.993763745)
+            Chareee.HumanoidRootPart.CFrame = CFrame.new(-264.447815, 155.822479, 427.063385, 0.993763745, 6.16412095e-08, 0.111506008, -6.66409576e-08, 1, 4.11113561e-08, -0.111506008, -4.82858411e-08, 0.993763745)
             
             local args = {[1] = "TreeLogSideQuest"}
             
@@ -90,7 +92,7 @@ function autoFarmCash()
             task.wait(0.15)
             
             
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(380.789185, 156.51001, -320.064056, -0.0318551399, -8.96111096e-09, 0.999492466, -2.18758101e-09, 1, 8.89593998e-09, -0.999492466, -1.90308924e-09, -0.0318551399)
+            Chareee.HumanoidRootPart.CFrame = CFrame.new(380.789185, 156.51001, -320.064056, -0.0318551399, -8.96111096e-09, 0.999492466, -2.18758101e-09, 1, 8.89593998e-09, -0.999492466, -1.90308924e-09, -0.0318551399)
             task.wait(0.15)
             
             
@@ -108,31 +110,40 @@ function autoFarmCash()
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
             task.wait(0.15)
             
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-264.447815, 155.822479, 427.063385, 0.993763745, 6.16412095e-08, 0.111506008, -6.66409576e-08, 1, 4.11113561e-08, -0.111506008, -4.82858411e-08, 0.993763745)
-            task.wait(0.1)
+            Chareee.HumanoidRootPart.CFrame = CFrame.new(-264.447815, 155.822479, 427.063385, 0.993763745, 6.16412095e-08, 0.111506008, -6.66409576e-08, 1, 4.11113561e-08, -0.111506008, -4.82858411e-08, 0.993763745)
+            task.wait(0.15)
             
             
             local args = {[1] = "TreeLogSideQuest"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))
-            task.wait(0.1)
+            task.wait(0.2)
             
             
             local args = {[1] = "TreeLogSideQuest", [2] = "quest_reward"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
-            task.wait(0.15)
+            task.wait(0.2)
             
             
             local args = {[1] = "TreeLogSideQuest", [2] = "..."}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
-            task.wait(0.15)
+            task.wait(0.2)
+
+            Chareee.HumanoidRootPart.CFrame = CFrame.new(-457.122192, 388.772766, -534.745667, -0.932645202, 3.74172693e-08, 0.360794902, 5.08153413e-08, 1, 2.76484364e-08, -0.360794902, 4.4120096e-08, -0.932645202)
+            task.wait(60)
         end
     end)
 end
 
+
 function autoFarmSQ()
     spawn(function()
-        game.Players.LocalPlayer.Backpack.Fists.Parent = Chareee
-
+        --[[if game.Players.LocalPlayer.Backpack.Fists.Parent == game.Players.LocalPlayer.Backpack then
+            game.Players.LocalPlayer.Backpack.Fists.Parent = Chareee
+        else
+        end]]
+        pcall(function()
+        Chareee.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack.Fists)
+        end)
         Chareee.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
         wait(0.1)
         local args = {[1] = "ShroomSideQuest", [2] = "begin"}
@@ -155,13 +166,14 @@ function autoFarmSQ()
                         wait()
                         Chareee.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,-6,0)
                         if v.Humanoid.Health <= 0 then
-                            local coutingKills = 0
-                            coutingKills = coutingKills + 1
-                            print(coutingKills)
-                            if coutingKills >= 5 then
+                            wait(0.1)
+                            local countingKills = countingKills + 5
+                            print(coutingKills)                       
+                            wait(0.1)
+                            if countingKills >= 5 then
                                 getgenv().Autofarm = false
-                                wait(0.01)
-                                Chareee.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
+                                wait(0.1)
+                                Chareee.HumanoidRootPart.CFrame = CFrame.new(-342.406555, 146.021729, 327.200745, 0.978649437, 3.15471804e-09, -0.205536574, -5.27631139e-09, 1, -9.77412995e-09, 0.205536574, 1.06499218e-08, 0.978649437)
                                 local args = {[1] = "ShroomSideQuest"}
                                 game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
                                 wait(0.1)
@@ -172,13 +184,14 @@ function autoFarmSQ()
                                 game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
                                 wait(0.1)
                                 getgenv().Autofarm = true
-                                coutingKills = 0
-                            else 
+                                countingKills = 0 
+                                print(countingKills)
                             end
-                        end
+                        else
+                            end
                         local args = {[1] = false}
                         game:GetService("Players").LocalPlayer.Character.Fists.CombatHandler.Attack:FireServer(unpack(args))
-                    until v.Humanoid.Health <= 0 or getgenv().Autofarm == false
+                    until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
                 end
             end
         end
