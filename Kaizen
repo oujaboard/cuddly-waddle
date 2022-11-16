@@ -29,10 +29,35 @@ end)
 toggle:SetToggle(false)
 
 
+_G.Table1 = {}
+function UDP(--[[Table1]])
+    for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
+        table.insert(_G.Table1, v.Name)
+    end
+end
+UDP()
+print(unpack(_G.Table1))
+
+
+local invdrpd = tab:Dropdown("Tool Select (For Autofarm)", {unpack(_G.Table1)}, function(selected)
+    selectedTool = selected
+    print("Dropdown element selected: "..selected)
+
+ end, true) -- Args(<string> Name, <table?> Options, <function?> Callback, <boolean?> ShowNoneOption)
+
+tab:Button("Refresh Tools (DOESNT WORK YET)", function()
+    --[[UpdInvList()
+    wait(0.1)
+    invdrpd:Refresh(_G.InventoryList,true)]]
+end)
+
+
+
+
 local toggle = tab:Toggle("Farm Shroom Quest (Invis Breaks This)", function(bool)
     getgenv().Autofarm = bool
     if bool then
-        autoFarmSQ()
+        autoFarmSQ(selectedTool)
     end
 end)
 toggle:SetToggle(false)
@@ -127,69 +152,80 @@ function autoFarmCash()
             task.wait(0.25)
 
             Chareee.HumanoidRootPart.CFrame = CFrame.new(-457.122192, 388.772766, -534.745667, -0.932645202, 3.74172693e-08, 0.360794902, 5.08153413e-08, 1, 2.76484364e-08, -0.360794902, 4.4120096e-08, -0.932645202)
-            task.wait(15)
+            task.wait(30)
         end
     end)
 end
 
+local countingKills = 0
 
-function autoFarmSQ()
+function autoFarmSQ(tool2use)
     spawn(function()
-        local countingKills = 0
-        --[[if game.Players.LocalPlayer.Backpack.Fists.Parent == game.Players.LocalPlayer.Backpack then
-            game.Players.LocalPlayer.Backpack.Fists.Parent = Chareee
-        else
-        end]]
-        pcall(function()
-            game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack.Fists)
-        end)
-        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
-        wait(0.1)
-        local args = {[1] = "ShroomSideQuest", [2] = "begin"}
-        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
-        wait(0.1)
-        local args = {[1] = "ShroomSideQuest", [2] = "Shrooms"}
-        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
-        wait(0.1)
-        local args = {[1] = "ShroomSideQuest", [2] = "Confirm"}
-        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
-        wait(0.1)
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
+            wait(0.1)
+            local args = {[1] = "ShroomSideQuest", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "ShroomSideQuest", [2] = "Shrooms"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "ShroomSideQuest", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
         while getgenv().Autofarm == true do
-            task.wait(0.025)
+            task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
 
             for i,v in pairs(Mobs:GetChildren()) do
-                if v.Name == "Shroom" and v.Humanoid.Health > 0 or getgenv().Autofarm == false then
+                if v.Name == "Shroom" and v.Humanoid.Health > 0 and getgenv().Autofarm == true and player then
                     repeat
-                        wait()
-                        Chareee.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,-6,0)
-                        if v.Humanoid.Health <= 0 then
-                            wait(0.1)
-                            countingKills = countingKills + 1
-                            print(countingKills)     
-                            wait(0.1)
-                            if countingKills >= 5 then
-                                getgenv().Autofarm = false
+                        pcall(function()
+                            game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                        end)
+                        task.wait()
+                        Chareee.HumanoidRootPart.CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,5,0) --* CFrame.new(0,5,0)
+                            if v.Humanoid.Health <= 0 then
                                 wait(0.1)
-                                Chareee.HumanoidRootPart.CFrame = CFrame.new(-342.406555, 146.021729, 327.200745, 0.978649437, 3.15471804e-09, -0.205536574, -5.27631139e-09, 1, -9.77412995e-09, 0.205536574, 1.06499218e-08, 0.978649437)
-                                local args = {[1] = "ShroomSideQuest"}
-                                game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
-                                wait(0.1)
-                                local args = {[1] = "ShroomSideQuest", [2] = "talk"}
-                                game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
-                                wait(0.1)
-                                local args = {[1] = "ShroomSideQuest", [2] = "Bye"}
-                                game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
-                                wait(0.1)
-                                getgenv().Autofarm = true
-                                countingKills = 0 
-                                print(countingKills)
-                            end
-                        else
-                            end
-                        local args = {[1] = false}
-                        game:GetService("Players").LocalPlayer.Character.Fists.CombatHandler.Attack:FireServer(unpack(args))
+                                countingKills = countingKills + 1
+                                print(countingKills)     
+                                task.wait(0.1)
+                                if countingKills == 5 then
+                                    getgenv().Autofarm = false
+                                    wait(0.1)
+                                    Chareee.HumanoidRootPart.CFrame = CFrame.new(-342.406555, 146.021729, 327.200745, 0.978649437, 3.15471804e-09, -0.205536574, -5.27631139e-09, 1, -9.77412995e-09, 0.205536574, 1.06499218e-08, 0.978649437)
+                                    local args = {[1] = "ShroomSideQuest"}
+                                    game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                    wait(0.1)
+                                    local args = {[1] = "ShroomSideQuest", [2] = "talk"}
+                                    game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                    wait(0.1)
+                                    local args = {[1] = "ShroomSideQuest", [2] = "Bye"}
+                                    game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                    wait(0.1)
+                                    getgenv().Autofarm = true
+                                    countingKills = 0 
+                                    print(countingKills)
+                                    wait(4)
+                                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-340, 146, 330)
+                                    wait(0.1)
+                                    local args = {[1] = "ShroomSideQuest", [2] = "begin"}
+                                    game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                    wait(0.1)
+                                    local args = {[1] = "ShroomSideQuest", [2] = "Shrooms"}
+                                    game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                    wait(0.1)
+                                    local args = {[1] = "ShroomSideQuest", [2] = "Confirm"}
+                                    game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                    wait(0.1)
+                                end
+                            else
+                                end
+                            game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                     until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
                 end
             end
