@@ -329,7 +329,7 @@ function autoFarmBandit(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -409,7 +409,7 @@ function autoFarmArmedBandit(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -489,7 +489,7 @@ function autoFarmJuniors(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -569,7 +569,7 @@ function autoFarmSeniors(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -649,7 +649,7 @@ function autoFarmFlyHeads(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -729,7 +729,7 @@ function autoFarmFireShrooms(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -809,7 +809,7 @@ function autoFarmRogueSorcerers(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -889,7 +889,7 @@ function autoFarmCrabions(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
