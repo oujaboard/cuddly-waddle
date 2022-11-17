@@ -11,138 +11,174 @@ end)
 local Chareee = game:GetService("Players").LocalPlayer.Character
 local Mobs = game:GetService("Workspace").Living.Mobs
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jxereas/UI-Libraries/main/athenic_gui_library.lua", true))()
 
-local window = library:CreateWindow("Kaizen Script by Oujaboard")
 
-local tab = window:CreateTab("Autofarm")
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local label = tab:Label("The fuck is a label", {
-   BgColor = Color3.fromRGB(20,20,20),
-   TextSize = 18,
-   TextColor = Color3.fromRGB(255,255,255)
+local Window = OrionLib:MakeWindow({Name = "Kaizen Script by Oujaboard", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+
+local Tab = Window:MakeTab({
+	Name = "Autofarm",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
 })
 
-label:ChangeText("Kaizen")
+local Section = Tab:AddSection({
+	Name = "Kaizen"
+})
 
-
-
-local toggle = tab:Toggle("Farm Money (Invis break this + Auto Quest better)", function(bool)
-    getgenv().MoneyFarmToggled = bool
-    if bool then
-        autoFarmCash()
-    end
-end)
-toggle:SetToggle(false)
+Tab:AddToggle({
+	Name = "Farm Money",
+	Default = false,
+	Callback = function(Value)
+        getgenv().MoneyFarmToggled = Value
+        if Value then
+            autoFarmCash()
+            print(Value)
+            OrionLib:MakeNotification({Name = "Money Farm Started!", Content = "", Image = "rbxassetid://4483345998", Time = 3})
+        elseif Value == false then
+            OrionLib:MakeNotification({Name = "Money Farm Ended!", Content = "", Image = "rbxassetid://4483345998", Time = 3})
+        end
+	end    
+})
 
 
 _G.Table1 = {}
 function UDP(--[[Table1]])
+    _G.Table1 = {}
     for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do 
         table.insert(_G.Table1, v.Name)
+        print(v.Name)
     end
 end
 UDP()
 print(unpack(_G.Table1))
 
 
-local invdrpd = tab:Dropdown("Tool Select (For Autofarm)", {unpack(_G.Table1)}, function(selected)
-    selectedTool = selected
-    print("Dropdown element selected: "..selected)
+local invdrpd = Tab:AddDropdown({
+	Name = "Tool Select (For Autofarm)",
+	Default = "",
+	Options = {unpack(_G.Table1)},
+	Callback = function(Value)
+		selectedTool = Value
+        print("Selected "..selectedTool.." for autofarm.")
+	end    
+})
 
- end, true) -- Args(<string> Name, <table?> Options, <function?> Callback, <boolean?> ShowNoneOption)
+Tab:AddButton({
+	Name = "Refresh Tool List",
+	Callback = function()
+      	UDP()
+        invdrpd:Refresh(_G.Table1,true)
+  	end    
+})
 
+Tab:AddDropdown({
+	Name = "Select Autofarm",
+	Default = "",
+	Options = {"Bandits | 5+", "Armed Bandits | 15+", "Shrooms | 30+", "Juniors | 45+", "Seniors | 65+", "Fly Heads | 80+", "Fire Shrooms | 110+", "Rogue Sorcerers | 125+", "Crabions | 140+", "Gnashers | 160+"},
+	Callback = function(Value)
+		selectedAutoFarm = Value
+        print("Selected "..selectedAutoFarm.." quest for autofarm.")
+	end    
+})
 
-
-
-
-tab:Dropdown("Select Autofarm", {"Bandits | 5+", "Armed Bandits | 15+", "Shrooms | 30+", "Juniors | 45+", "Seniors | 65+", "Fly Heads | 80+", "Fire Shrooms | 110+", "Rogue Sorcerers | 125+", "Crabions | 140+", "Gnashers | 160+"}, function(selected)
-    selectedAutoFarm = selected
-    print("Dropdown element selected: "..selected)
- end, true) -- Args(<string> Name, <table?> Options, <function?> Callback, <boolean?> ShowNoneOption)
-
-
-
-local toggle = tab:Toggle("Autofarm Quest (Select w/ Dropdown)", function(bool)
-    getgenv().Autofarm = bool
-    if bool then
-        if selectedAutoFarm == "Bandits | 5+" and bool then
-            autoFarmBandit(selectedTool)
-        elseif selectedAutoFarm == "Armed Bandits | 15+" and bool then
-            autoFarmArmedBandit(selectedTool)
-        elseif selectedAutoFarm == "Shrooms | 30+" and bool then
-            autoFarmShroom(selectedTool)
-        elseif selectedAutoFarm == "Juniors | 45+" and bool then
-            autoFarmJuniors(selectedTool)
-        elseif selectedAutoFarm == "Seniors | 65+" and bool then
-            autoFarmSeniors(selectedTool)
-        elseif selectedAutoFarm == "Fly Heads | 80+" and bool then
-            autoFarmFlyHeads(selectedTool)
-        elseif selectedAutoFarm == "Fire Shrooms | 110+" and bool then
-            autoFarmFireShrooms(selectedTool)
-        elseif selectedAutoFarm == "Rogue Sorcerers | 125+" and bool then
-            autoFarmRogueSorcerers(selectedTool)
-        elseif selectedAutoFarm == "Crabions | 140+" and bool then
-            autoFarmCrabions(selectedTool)
-        elseif selectedAutoFarm == "Gnashers | 160+" and bool then
-            autoFarmGnashers(selectedTool)
+Tab:AddToggle({
+	Name = "Autofarm Quest (Select w/ Dropdown)",
+	Default = false,
+	Callback = function(Value)
+        getgenv().Autofarm = Value
+        if Value == true then
+            if selectedAutoFarm == "Bandits | 5+" and Value then
+                autoFarmBandit(selectedTool)
+            elseif selectedAutoFarm == "Armed Bandits | 15+" and Value then
+                autoFarmArmedBandit(selectedTool)
+            elseif selectedAutoFarm == "Shrooms | 30+" and Value then
+                autoFarmShroom(selectedTool)
+            elseif selectedAutoFarm == "Juniors | 45+" and Value then
+                autoFarmJuniors(selectedTool)
+            elseif selectedAutoFarm == "Seniors | 65+" and Value then
+                autoFarmSeniors(selectedTool)
+            elseif selectedAutoFarm == "Fly Heads | 80+" and Value then
+                autoFarmFlyHeads(selectedTool)
+            elseif selectedAutoFarm == "Fire Shrooms | 110+" and Value then
+                autoFarmFireShrooms(selectedTool)
+            elseif selectedAutoFarm == "Rogue Sorcerers | 125+" and Value then
+                autoFarmRogueSorcerers(selectedTool)
+            elseif selectedAutoFarm == "Crabions | 140+" and Value then
+                autoFarmCrabions(selectedTool)
+            elseif selectedAutoFarm == "Gnashers | 160+" and Value then
+                autoFarmGnashers(selectedTool)
+            end
         end
-    end
-end)
-toggle:SetToggle(false)
-
-
-tab:Button("Invisibility (Breaks Autofarms until death)", function()
-   local tempPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-   task.wait(0.1)
-   game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(117.620003, 235.537994, 243.947998, -0.993051589, -3.08575174e-08, -0.117679805, -1.89604723e-08, 1, -1.02216269e-07, 0.117679805, -9.92747644e-08, -0.993051589)
-   task.wait(0.5)
-   game:GetService("Players").LocalPlayer.Character.LowerTorso.Root:Destroy()
-   task.wait(1)
-   game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = tempPos
-end)
+	end    
+})
 
 
 
 
-local tab2 = window:CreateTab("Misc")
-
-tab2:Slider("WalkSpeed", 500, function(val)
-     while task.wait(0.1) do
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = val
-     end
- end)
-
- tab2:Slider("JumpPower", 500, function(val)
-    while task.wait(0.1) do
-       game.Players.LocalPlayer.Character.Humanoid.JumpPower = val
-    end
-end)
 
 
 
 
-local tab3 = window:CreateTab("Credits")
+local Tab2 = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-local label1 = tab3:Label("killer91#2425 aka oujaboard on v3rmillion.net", {
-    BgColor = Color3.fromRGB(20,20,20),
-    TextSize = 18,
-    TextColor = Color3.fromRGB(255,255,255)
- }) -- Args(<string> Name, <table?> LabelTraits, <table?> ImageInfo)
- 
+Tab2:AddButton({
+	Name = "Invisibility (Breaks Autofarms until death)",
+	Callback = function()
+        local tempPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+        task.wait(0.1)
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(117.620003, 235.537994, 243.947998, -0.993051589, -3.08575174e-08, -0.117679805, -1.89604723e-08, 1, -1.02216269e-07, 0.117679805, -9.92747644e-08, -0.993051589)
+        task.wait(0.5)
+        game:GetService("Players").LocalPlayer.Character.LowerTorso.Root:Destroy()
+        task.wait(1)
+        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = tempPos
+  	end    
+})
+Tab2:AddSlider({
+	Name = "WalkSpeed",
+	Min = 0,
+	Max = 500,
+	Default = 16,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "walkspeed",
+	Callback = function(Value)
+        game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end    
+})
 
- label1:ChangeText("killer91#2425 aka oujaboard on v3rmillion.net") -- Args(<string> NewLabelName)
+Tab2:AddSlider({
+	Name = "JumpPower",
+	Min = 0,
+	Max = 500,
+	Default = 50,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "jumppower",
+	Callback = function(Value)
+        game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = Value
+	end    
+})
+
+
+local Tab3 = Window:MakeTab({
+	Name = "Credits",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab3:AddLabel("killer91#2425 aka oujaboard on v3rmillion.net")
+Tab3:AddLabel("Big helper Jumble on v3rmillion.net")
 
 
 
- local label2 = tab3:Label("Big helper Jumble on v3rmillion.net", {
-    BgColor = Color3.fromRGB(20,20,20),
-    TextSize = 18,
-    TextColor = Color3.fromRGB(255,255,255)
- }) -- Args(<string> Name, <table?> LabelTraits, <table?> ImageInfo)
- 
 
- label2:ChangeText("Big helper Jumble on v3rmillion.net")
+
 
 function autoFarmCash()
     spawn(function()
@@ -235,14 +271,18 @@ function autoFarmShroom(tool2use)
             wait(0.1)
         end
         while getgenv().Autofarm == true do
+            print("checkpoint 1")
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
             local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
+                print("checkpoint 2")
                 if v.Name == "Shroom" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                --print("checkpoint 3")
                     if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        --print("checkpoint 4")
                         repeat
                             pcall(function()
                                 game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
@@ -288,7 +328,7 @@ function autoFarmShroom(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -329,7 +369,7 @@ function autoFarmBandit(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -368,7 +408,7 @@ function autoFarmBandit(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -409,7 +449,7 @@ function autoFarmArmedBandit(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -448,7 +488,7 @@ function autoFarmArmedBandit(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -489,7 +529,7 @@ function autoFarmJuniors(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -528,7 +568,7 @@ function autoFarmJuniors(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -569,7 +609,7 @@ function autoFarmSeniors(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -608,7 +648,7 @@ function autoFarmSeniors(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -649,7 +689,7 @@ function autoFarmFlyHeads(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -688,7 +728,7 @@ function autoFarmFlyHeads(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -729,7 +769,7 @@ function autoFarmFireShrooms(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -768,7 +808,7 @@ function autoFarmFireShrooms(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -809,7 +849,7 @@ function autoFarmRogueSorcerers(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -848,7 +888,7 @@ function autoFarmRogueSorcerers(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -889,7 +929,7 @@ function autoFarmCrabions(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -928,7 +968,7 @@ function autoFarmCrabions(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
@@ -969,7 +1009,7 @@ function autoFarmGnashers(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -1008,10 +1048,12 @@ function autoFarmGnashers(tool2use)
                                 end
                                 --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
                                 attack4Farm(tool2use)
-                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                        until v:WaitForChild("Humanoid",9e99).Health <= 0 or getgenv().Autofarm == false or Chareee:WaitForChild("Humanoid",9e99).Health <= 0
                     end
                 end
             end
         end
     end)
 end
+
+OrionLib:Init() --MUST BE AT THE END OF SCRIPT
