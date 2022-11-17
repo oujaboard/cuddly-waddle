@@ -27,7 +27,7 @@ label:ChangeText("Kaizen")
 
 
 
-local toggle = tab:Toggle("Farm Money (Invis Breaks This)", function(bool)
+local toggle = tab:Toggle("Farm Money (Invis Breaks This.. + Autofarm Quest is probably better)", function(bool)
     getgenv().MoneyFarmToggled = bool
     if bool then
         autoFarmCash()
