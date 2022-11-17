@@ -617,13 +617,13 @@ function autoFarmFlyHeads(tool2use)
         if getgenv().Autofarm == true then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
             wait(0.1)
-            local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+            local args = {[1] = "EnrolmentCurseQuest", [2] = "begin"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
             wait(0.1)
-            local args = {[1] = "EnrolmentSideQuest", [2] = "Fly Heads"}
+            local args = {[1] = "EnrolmentCurseQuest", [2] = "Fly Heads"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
             wait(0.1)
-            local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+            local args = {[1] = "EnrolmentCurseQuest", [2] = "Confirm"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
             wait(0.1)
         end
@@ -652,13 +652,13 @@ function autoFarmFlyHeads(tool2use)
                                         getgenv().Autofarm = false
                                         wait(0.1)
                                         Chareee.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
-                                        local args = {[1] = "EnrolmentSideQuest"}
+                                        local args = {[1] = "EnrolmentCurseQuest"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "talk"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "talk"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Bye"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "Bye"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
                                         wait(0.1)
                                         countingKills = 0 
@@ -666,13 +666,13 @@ function autoFarmFlyHeads(tool2use)
                                         wait(4)
                                         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "begin"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Fly Heads"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "Fly Heads"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "Confirm"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
                                         wait(0.1)
                                         getgenv().Autofarm = true
@@ -697,13 +697,13 @@ function autoFarmFireShrooms(tool2use)
         if getgenv().Autofarm == true then
             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
             wait(0.1)
-            local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+            local args = {[1] = "EnrolmentCurseQuest", [2] = "begin"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
             wait(0.1)
-            local args = {[1] = "EnrolmentSideQuest", [2] = "Fire Shrooms"}
+            local args = {[1] = "EnrolmentCurseQuest", [2] = "Fire Shrooms"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
             wait(0.1)
-            local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+            local args = {[1] = "EnrolmentCurseQuest", [2] = "Confirm"}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
             wait(0.1)
         end
@@ -732,13 +732,13 @@ function autoFarmFireShrooms(tool2use)
                                         getgenv().Autofarm = false
                                         wait(0.1)
                                         Chareee.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
-                                        local args = {[1] = "EnrolmentSideQuest"}
+                                        local args = {[1] = "EnrolmentCurseQuest"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "talk"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "talk"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Bye"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "Bye"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
                                         wait(0.1)
                                         countingKills = 0 
@@ -746,13 +746,13 @@ function autoFarmFireShrooms(tool2use)
                                         wait(4)
                                         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "begin"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Fire Shrooms"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "Fire Shrooms"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
                                         wait(0.1)
-                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+                                        local args = {[1] = "EnrolmentCurseQuest", [2] = "Confirm"}
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
                                         wait(0.1)
                                         getgenv().Autofarm = true
