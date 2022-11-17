@@ -318,7 +318,7 @@ function autoFarmBandit(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Rogue Bandit" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -398,7 +398,7 @@ function autoFarmArmedBandit(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Armed Bandit" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -478,7 +478,7 @@ function autoFarmJuniors(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Junior" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -558,7 +558,7 @@ function autoFarmSeniors(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Senior" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -638,7 +638,7 @@ function autoFarmFlyHeads(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Fly Head" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -718,7 +718,7 @@ function autoFarmFireShrooms(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Fire Shroom" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -798,7 +798,7 @@ function autoFarmRogueSorcerers(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Rogue Sorcerer" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -878,7 +878,7 @@ function autoFarmCrabions(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Crabion" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
@@ -958,7 +958,7 @@ function autoFarmGnashers(tool2use)
             task.wait()
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
-            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
 
             for i,v in pairs(Mobs:GetChildren()) do
                 if v.Name == "Gnasher" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
