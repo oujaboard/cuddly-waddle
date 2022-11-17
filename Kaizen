@@ -45,11 +45,7 @@ local invdrpd = tab:Dropdown("Tool Select (For Autofarm)", {unpack(_G.Table1)}, 
 
  end, true) -- Args(<string> Name, <table?> Options, <function?> Callback, <boolean?> ShowNoneOption)
 
-tab:Button("Refresh Tools (DOESNT WORK YET)", function()
-    --[[UpdInvList()
-    wait(0.1)
-    invdrpd:Refresh(_G.InventoryList,true)]]
-end)
+
 
 
 
