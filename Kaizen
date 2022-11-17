@@ -113,7 +113,29 @@ tab2:Slider("WalkSpeed", 500, function(val)
 end)
 
 
---FUNCTIONS
+
+
+local tab3 = window:CreateTab("Credits")
+
+local label1 = tab3:Label("killer91#2425 aka oujaboard on v3rmillion.net", {
+    BgColor = Color3.fromRGB(20,20,20),
+    TextSize = 18,
+    TextColor = Color3.fromRGB(255,255,255)
+ }) -- Args(<string> Name, <table?> LabelTraits, <table?> ImageInfo)
+ 
+
+ label1:ChangeText("killer91#2425 aka oujaboard on v3rmillion.net") -- Args(<string> NewLabelName)
+
+
+
+ local label2 = tab3:Label("Big helper Jumble on v3rmillion.net", {
+    BgColor = Color3.fromRGB(20,20,20),
+    TextSize = 18,
+    TextColor = Color3.fromRGB(255,255,255)
+ }) -- Args(<string> Name, <table?> LabelTraits, <table?> ImageInfo)
+ 
+
+ label2:ChangeText("Big helper Jumble on v3rmillion.net")
 
 function autoFarmCash()
     spawn(function()
