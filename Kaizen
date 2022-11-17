@@ -53,16 +53,37 @@ end)
 
 
 
-tab:Dropdown("Dropdown Name", {"Option 1", "Option 2", "Option 3"}, function(selected)
+tab:Dropdown("Select Autofarm", {"Bandits | 5+", "Armed Bandits | 15+", "Shrooms | 30+", "Juniors | 45+", "Seniors | 65+", "Fly Heads | 80+", "Fire Shrooms | 110+", "Rogue Sorcerers | 125+", "Crabions | 140+", "Gnashers | 160+"}, function(selected)
+    selectedAutoFarm = selected
     print("Dropdown element selected: "..selected)
  end, true) -- Args(<string> Name, <table?> Options, <function?> Callback, <boolean?> ShowNoneOption)
 
 
 
-local toggle = tab:Toggle("Farm Shroom Quest (Invis Breaks This)", function(bool)
+local toggle = tab:Toggle("Autofarm Quest (Select w/ Dropdown)", function(bool)
     getgenv().Autofarm = bool
     if bool then
-        autoFarmShroom(selectedTool)
+        if selectedAutoFarm == "Bandits | 5+" and bool then
+            autoFarmBandit(selectedTool)
+        elseif selectedAutoFarm == "Armed Bandits | 15+" and bool then
+            autoFarmArmedBandit(selectedTool)
+        elseif selectedAutoFarm == "Shrooms | 30+" and bool then
+            autoFarmShroom(selectedTool)
+        elseif selectedAutoFarm == "Juniors | 45+" and bool then
+            autoFarmJuniors(selectedTool)
+        elseif selectedAutoFarm == "Seniors | 65+" and bool then
+            autoFarmSeniors(selectedTool)
+        elseif selectedAutoFarm == "Fly Heads | 80+" and bool then
+            autoFarmFlyHeads(selectedTool)
+        elseif selectedAutoFarm == "Fire Shrooms | 110+" and bool then
+            autoFarmFireShrooms(selectedTool)
+        elseif selectedAutoFarm == "Rogue Sorcerers | 125+" and bool then
+            autoFarmRogueSorcerers(selectedTool)
+        elseif selectedAutoFarm == "Crabions | 140+" and bool then
+            autoFarmCrabions(selectedTool)
+        elseif selectedAutoFarm == "Gnashers | 160+" and bool then
+            autoFarmGnashers(selectedTool)
+        end
     end
 end)
 toggle:SetToggle(false)
@@ -162,6 +183,14 @@ function autoFarmCash()
     end)
 end
 
+function attack4Farm(tool2use)
+    spawn(function()
+        game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+    end)
+end
+
+
+
 local countingKills = 0
 
 function autoFarmShroom(tool2use)
@@ -195,7 +224,7 @@ function autoFarmShroom(tool2use)
                             end)
                             task.wait()
                             --print(v.Name)
-                            Chareee.HumanoidRootPart.CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
                                 if v.Humanoid.Health <= 0 then
                                     wait(0.1)
                                     countingKills = countingKills + 1
@@ -229,9 +258,731 @@ function autoFarmShroom(tool2use)
                                         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
                                         wait(0.1)
                                         getgenv().Autofarm = true
+                                        autoFarmShroom(tool2use)
                                     end
                                 end
-                                game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmBandit(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
+            wait(0.1)
+            local args = {[1] = "BanditSideQuest", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "BanditSideQuest", [2] = "Bandits"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "BanditSideQuest", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Rogue Bandit" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
+                                        local args = {[1] = "BanditSideQuest"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "Bandits"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmBandit(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmArmedBandit(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
+            wait(0.1)
+            local args = {[1] = "BanditSideQuest", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "BanditSideQuest", [2] = "Armed Bandits"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "BanditSideQuest", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Armed Bandit" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
+                                        local args = {[1] = "BanditSideQuest"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "Armed Bandits"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "BanditSideQuest", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmArmedBandit(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmJuniors(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1214.39124, 200.528534, 111.117302, 0.923870921, 3.27921548e-08, 0.382704228, -5.96501621e-08, 1, 5.83136881e-08, -0.382704228, -7.67026904e-08, 0.923870921)
+            wait(0.1)
+            local args = {[1] = "StudentSideQuest", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "StudentSideQuest", [2] = "Juniors"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "StudentSideQuest", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Junior" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(1214.39124, 200.528534, 111.117302, 0.923870921, 3.27921548e-08, 0.382704228, -5.96501621e-08, 1, 5.83136881e-08, -0.382704228, -7.67026904e-08, 0.923870921)
+                                        local args = {[1] = "StudentSideQuest"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1214.39124, 200.528534, 111.117302, 0.923870921, 3.27921548e-08, 0.382704228, -5.96501621e-08, 1, 5.83136881e-08, -0.382704228, -7.67026904e-08, 0.923870921)
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "Juniors"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmJuniors(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmSeniors(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1214.39124, 200.528534, 111.117302, 0.923870921, 3.27921548e-08, 0.382704228, -5.96501621e-08, 1, 5.83136881e-08, -0.382704228, -7.67026904e-08, 0.923870921)
+            wait(0.1)
+            local args = {[1] = "StudentSideQuest", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "StudentSideQuest", [2] = "Seniors"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "StudentSideQuest", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Senior" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(1214.39124, 200.528534, 111.117302, 0.923870921, 3.27921548e-08, 0.382704228, -5.96501621e-08, 1, 5.83136881e-08, -0.382704228, -7.67026904e-08, 0.923870921)
+                                        local args = {[1] = "StudentSideQuest"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1214.39124, 200.528534, 111.117302, 0.923870921, 3.27921548e-08, 0.382704228, -5.96501621e-08, 1, 5.83136881e-08, -0.382704228, -7.67026904e-08, 0.923870921)
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "Seniors"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "StudentSideQuest", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmSeniors(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmFlyHeads(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
+            wait(0.1)
+            local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "EnrolmentSideQuest", [2] = "Fly Heads"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Fly Head" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
+                                        local args = {[1] = "EnrolmentSideQuest"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Fly Heads"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmFlyHeads(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmFireShrooms(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
+            wait(0.1)
+            local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "EnrolmentSideQuest", [2] = "Fire Shrooms"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Fire Shroom" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
+                                        local args = {[1] = "EnrolmentSideQuest"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(984.453979, 197.05983, 149.660172, 0.670953333, 0.00534128677, 0.74148035, -0.0108450074, 0.999937773, 0.00261037191, -0.741420269, -0.0097927982, 0.670969486)
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Fire Shrooms"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "EnrolmentSideQuest", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmFireShrooms(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmRogueSorcerers(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "Rogue Sorcerers"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Rogue Sorcerer" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+                                        local args = {[1] = "MidoriPrimarySideQuests"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Rogue Sorcerers"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmRogueSorcerers(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmCrabions(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "Crabions"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Crabion" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+                                        local args = {[1] = "MidoriPrimarySideQuests"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Crabions"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmCrabions(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
+                        until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end
+    end)
+end
+
+
+
+function autoFarmGnashers(tool2use)
+    spawn(function()
+        print(tool2use)
+        if getgenv().Autofarm == true then
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "begin"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "Gnashers"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+            local args = {[1] = "MidoriPrimarySideQuests", [2] = "Confirm"}
+            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+            wait(0.1)
+        end
+        while getgenv().Autofarm == true do
+            task.wait()
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Gnasher" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        repeat
+                            pcall(function()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end)
+                            task.wait()
+                            --print(v.Name)
+                            Chareee:FindFirstChild("HumanoidRootPart").CFrame = v:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,-5,0) --* CFrame.new(0,5,0)
+                                if v.Humanoid.Health <= 0 then
+                                    wait(0.1)
+                                    countingKills = countingKills + 1
+                                    print(countingKills)     
+                                    task.wait(0.1)
+                                    if countingKills == 5 then
+                                        getgenv().Autofarm = false
+                                        wait(0.1)
+                                        Chareee.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+                                        local args = {[1] = "MidoriPrimarySideQuests"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "talk"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Bye"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                                        wait(0.1)
+                                        countingKills = 0 
+                                        print(countingKills)
+                                        wait(4)
+                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.505981, 118.803177, -865.584656, -0.258913308, -9.3866575e-08, -0.96590054, 9.50332479e-10, 1, -9.74351124e-08, 0.96590054, -2.61451731e-08, -0.258913308)
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "begin"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Gnashers"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        local args = {[1] = "MidoriPrimarySideQuests", [2] = "Confirm"}
+                                        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                                        wait(0.1)
+                                        getgenv().Autofarm = true
+                                        autoFarmGnashers(tool2use)
+                                    end
+                                end
+                                --game:GetService("Players").LocalPlayer.Character[tool2use]:Activate()
+                                attack4Farm(tool2use)
                         until v.Humanoid.Health <= 0 or getgenv().Autofarm == false or Chareee.Humanoid.Health <= 0
                     end
                 end
