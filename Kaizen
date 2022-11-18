@@ -11,7 +11,7 @@ end)
 local Chareee = game:GetService("Players").LocalPlayer.Character
 local Mobs = game:GetService("Workspace").Living.Mobs
 local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
-local questuithing = game:GetService("Players")["killernine_YT"].PlayerGui.UINoReset.Quests.QuestsFrame.QuestTemplate1.Label
+local questuithing = game:GetService("Players").LocalPlayer.PlayerGui.UINoReset.Quests.QuestsFrame.QuestTemplate1.Label
 
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
