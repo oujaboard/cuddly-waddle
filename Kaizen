@@ -1010,8 +1010,8 @@ function autoFarmHanamato(tool2use)
                                 game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
-                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Hanamato').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('1/1') then
+                            if getgenv().Autofarm == true and and getMob('Hanamato'):FindFirstChild("HumanoidRootPart") not questuithing.Text:lower():find('1/1') then
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Hanamato'):FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-4.5,0)
                                 attack4Farm(tool2use)
                             end
                         else
@@ -1026,8 +1026,6 @@ function autoFarmHanamato(tool2use)
                             local args = {[1] = "Yuzi2", [2] = "Bye"}
                             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
                             wait(0.1)
-                            countingKills = 0 
-                            print(countingKills)
                             wait(4)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-86, 145, -641)
                             wait(0.1)
