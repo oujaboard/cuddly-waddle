@@ -14,7 +14,7 @@ local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart
 local questuithing = game:GetService("Players").LocalPlayer.PlayerGui.UINoReset.Quests.QuestsFrame.QuestTemplate1.Label
 
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/oujaboard/cuddly-waddle/main/OrionUILibReuploadNoDiscord')))()
 
 local Window = OrionLib:MakeWindow({Name = "Kaizen Script by Oujaboard", HidePremium = false, SaveConfig = true, ConfigFolder = "KaizenOujaboard"})
 
@@ -28,6 +28,12 @@ local Tab = Window:MakeTab({
 Tab:AddLabel("killer91#2425 aka oujaboard on v3rmillion.net")
 Tab:AddLabel("Big helper Jumble on v3rmillion.net")
 
+local disinv = Tab:AddButton({
+	Name = "Copy Discord Invite",
+	Callback = function()
+      	setclipboard("https://discord.gg/RQea5h8j9t")
+  	end    
+})
 
 local Tab2 = Window:MakeTab({
 	Name = "Autofarm",
@@ -35,7 +41,7 @@ local Tab2 = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local Section = Tab:AddSection({
+local Section = Tab2:AddSection({
 	Name = "Kaizen"
 })
 
@@ -86,7 +92,7 @@ Tab2:AddButton({
 Tab2:AddDropdown({
 	Name = "Select Autofarm",
 	Default = "",
-	Options = {"Bandits | 5+", "Armed Bandits | 15+", "Shrooms | 30+", "Juniors | 45+", "Seniors | 65+", "Fly Heads | 80+", "Fire Shrooms | 110+", "Rogue Sorcerers | 125+", "Crabions | 140+", "Gnashers | 160+"},
+	Options = {"Bandits | 5+", "Armed Bandits | 15+", "Shrooms | 30+", "Juniors | 45+", "Seniors | 65+", "Fly Heads | 80+", "Fire Shrooms | 110+", "Rogue Sorcerers | 125+", "Crabions | 140+", "Gnashers | 160+", "Hanamato | 130+"},
 	Callback = function(Value)
 		selectedAutoFarm = Value
         print("Selected "..selectedAutoFarm.." quest for autofarm.")
@@ -119,6 +125,8 @@ Tab2:AddToggle({
                 autoFarmCrabions(selectedTool)
             elseif selectedAutoFarm == "Gnashers | 160+" and Value then
                 autoFarmGnashers(selectedTool)
+            elseif selectedAutoFarm == "Hanamato | 130+" and Value then
+                autoFarmHanamato(selectedTool)
             end
         end
 	end    
@@ -323,7 +331,9 @@ function autoFarmShroom(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Shroom').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(-343, 146, 330)
@@ -389,7 +399,9 @@ function autoFarmBandit(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Rogue Bandit').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
@@ -455,7 +467,9 @@ function autoFarmArmedBandit(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Armed Bandit').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(-170.759781, 154.134995, 173.60585, -0.622503459, -2.81734263e-08, -0.782617092, -8.66240768e-08, 1, 3.29028857e-08, 0.782617092, 8.8275641e-08, -0.622503459)
@@ -521,7 +535,9 @@ function autoFarmJuniors(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Junior').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(1217, 201, 108)
@@ -587,7 +603,9 @@ function autoFarmSeniors(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Senior').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(1217, 201, 108)
@@ -653,7 +671,9 @@ function autoFarmFlyHeads(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Fly Head').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(986, 197, 147)
@@ -719,7 +739,9 @@ function autoFarmFireShrooms(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Fire Shroom').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(986, 197, 147)
@@ -785,7 +807,9 @@ function autoFarmRogueSorcerers(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Rogue Sorcerer').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(190, 119, -867)
@@ -851,7 +875,9 @@ function autoFarmCrabions(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Crabion').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(190, 119, -867)
@@ -919,7 +945,9 @@ function autoFarmGnashers(tool2use)
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Gnasher').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
-                            attack4Farm(tool2use)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('5/5') then
+                                attack4Farm(tool2use)
+                            end
                         else
                             wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(190, 119, -867)
@@ -955,6 +983,74 @@ function autoFarmGnashers(tool2use)
         end
     end)
 end
+
+function autoFarmHanamato(tool2use)
+    spawn(function()
+        print(tool2use)
+        Chareee.HumanoidRootPart.CFrame = CFrame.new(-86, 145, -641)
+        local args = {[1] = "Yuzi2", [2] = "begin"}
+        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+        wait(0.1)
+        local args = {[1] = "Yuzi2", [2] = "Hanamato"}
+        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+        wait(0.1)
+        local args = {[1] = "Yuzi2", [2] = "Confirm"}
+        game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+        wait(0.1)
+        while getgenv().Autofarm == true do
+            local Chareee = game:GetService("Players").LocalPlayer.Character
+            local Mobs = game:GetService("Workspace").Living.Mobs
+            local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
+            for i,v in pairs(Mobs:GetChildren()) do
+                if v.Name == "Hanamato" --[[and v:FindFirstChild("Humanoid").Health > 0]] and getgenv().Autofarm == true and player then
+                    if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        if not questuithing.Text:lower():find('1/1') and getgenv().Autofarm == true then
+                            task.wait()
+                            if not game:GetService("Players").LocalPlayer.Character:FindFirstChild(tool2use) then
+                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                            end
+                            --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Hanamato').HumanoidRootPart.CFrame * CFrame.new(0,-4.5,0)
+                            if getgenv().Autofarm == true and not questuithing.Text:lower():find('1/1') then
+                                attack4Farm(tool2use)
+                            end
+                        else
+                            wait(0.1)
+                            Chareee.HumanoidRootPart.CFrame = CFrame.new(-86, 145, -641)
+                            local args = {[1] = "Yuzi2"}
+                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
+                            wait(0.1)
+                            local args = {[1] = "Yuzi2", [2] = "talk"}
+                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))                                
+                            wait(0.1)
+                            local args = {[1] = "Yuzi2", [2] = "Bye"}
+                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))                                
+                            wait(0.1)
+                            countingKills = 0 
+                            print(countingKills)
+                            wait(4)
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-86, 145, -641)
+                            wait(0.1)
+                            local args = {[1] = "Yuzi2", [2] = "begin"}
+                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
+                            wait(0.1)
+                            local args = {[1] = "Yuzi2", [2] = "Hanamato"}
+                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                            wait(0.1)
+                            local args = {[1] = "Yuzi2", [2] = "Confirm"}
+                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
+                            wait(0.1)
+                            getgenv().Autofarm = true
+                            wait(0.1)
+                            autoFarmHanamato(tool2use)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end
+
 
 
 
