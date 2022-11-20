@@ -191,8 +191,7 @@ Tab3:AddSlider({
 function autoFarmCash()
     spawn(function()
         while getgenv().MoneyFarmToggled == true do
-            task.wait(1)
-            
+            task.wait()
             Chareee.HumanoidRootPart.CFrame = CFrame.new(-264.447815, 155.822479, 427.063385, 0.993763745, 6.16412095e-08, 0.111506008, -6.66409576e-08, 1, 4.11113561e-08, -0.111506008, -4.82858411e-08, 0.993763745)
             
             local args = {[1] = "TreeLogSideQuest"}
@@ -245,9 +244,9 @@ function autoFarmCash()
             local args = {[1] = "TreeLogSideQuest", [2] = "..."}
             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
             task.wait(0.25)
-
+            
             Chareee.HumanoidRootPart.CFrame = CFrame.new(-457.122192, 388.772766, -534.745667, -0.932645202, 3.74172693e-08, 0.360794902, 5.08153413e-08, 1, 2.76484364e-08, -0.360794902, 4.4120096e-08, -0.932645202)
-            task.wait(30)
+            task.wait(17)
         end
     end)
 end
@@ -255,6 +254,24 @@ end
 function attack4Farm(tool2use)
     spawn(function()
         game:GetService("Players").LocalPlayer.Character:WaitForChild(tool2use,9e99):Activate()
+    end)
+end
+
+function autoEquipTool(tool2use)
+    spawn(function()
+        local args = {[1] = tool2use.InventorySlot.Value}
+        game:GetService("ReplicatedStorage").Knit.Services.inventoryService.RE.EquipItem:FireServer(unpack(args))
+        --game:GetService("Players").LocalPlayer.PlayerGui.UI.Inventory.Image.Main.InventoryScroll[tool2use].InventorySlot
+    end)
+end
+
+function autoEquipTool(tool2use)
+    spawn(function()
+        if not game:GetService("Players").LocalPlayer.Backpack[tool2use] and not game:GetService("Players").LocalPlayer.Character[tool2use] then
+            local etool = game:GetService("Players").LocalPlayer.PlayerGui.UI.Inventory.Image.Main.InventoryScroll[tool2use].InventorySlot.Value
+            local args = {[1] = etool}
+            game:GetService("ReplicatedStorage").Knit.Services.inventoryService.RE.EquipItem:FireServer(unpack(args))
+        end
     end)
 end
 
@@ -988,6 +1005,7 @@ function autoFarmHanamato(tool2use)
     spawn(function()
         print(tool2use)
         Chareee.HumanoidRootPart.CFrame = CFrame.new(-86, 145, -641)
+        wait(0.1)
         local args = {[1] = "Yuzi2", [2] = "begin"}
         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
         wait(0.1)
@@ -998,6 +1016,8 @@ function autoFarmHanamato(tool2use)
         game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
         wait(0.1)
         while getgenv().Autofarm == true do
+            --task.wait()
+            if getgenv().Autofarm == false then break end;
             local Chareee = game:GetService("Players").LocalPlayer.Character
             local Mobs = game:GetService("Workspace").Living.Mobs
             local player = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart",9e99)
@@ -1007,15 +1027,18 @@ function autoFarmHanamato(tool2use)
                         if not questuithing.Text:lower():find('1/1') and getgenv().Autofarm == true then
                             task.wait()
                             if not game:GetService("Players").LocalPlayer.Character:FindFirstChild(tool2use) then
-                                game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack[tool2use])
+                                game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid",9e99):EquipTool(game.Players.LocalPlayer.Backpack:WaitForChild(tool2use,9e99))
                             end
                             --Chareee:WaitForChild("HumanoidRootPart",9e99).CFrame = v:WaitForChild("HumanoidRootPart",9e99).CFrame + Vector3.new(0,-5,0)
-                            if getgenv().Autofarm == true and getMob('Hanamato'):FindFirstChild("HumanoidRootPart") and not questuithing.Text:lower():find('1/1') then
-                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Hanamato'):FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,-4.5,0)
-                                attack4Farm(tool2use)
-                            end
-                        else
-                            wait(0.1)
+                            pcall(function()
+                                if getgenv().Autofarm == true and getMob('Hanamato'):FindFirstChild("HumanoidRootPart") and not questuithing.Text:lower():find('1/1') then
+                                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = getMob('Hanamato'):FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,5,0)
+                                    attack4Farm(tool2use)
+                                end
+                            end)
+                        if questuithing.Text:lower():find('1/1') and getgenv().Autofarm == true then
+                            --getgenv().Autofarm = false
+                            task.wait(0.1)
                             Chareee.HumanoidRootPart.CFrame = CFrame.new(-86, 145, -641)
                             local args = {[1] = "Yuzi2"}
                             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetInitFunction:InvokeServer(unpack(args))                                
@@ -1031,16 +1054,16 @@ function autoFarmHanamato(tool2use)
                             wait(0.1)
                             local args = {[1] = "Yuzi2", [2] = "begin"}
                             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetDialogue:InvokeServer(unpack(args))
-                            wait(0.1)
+                            task.wait(0.1)
                             local args = {[1] = "Yuzi2", [2] = "Hanamato"}
                             game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
                             wait(0.1)
                             local args = {[1] = "Yuzi2", [2] = "Confirm"}
-                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))        
-                            wait(0.1)
-                            getgenv().Autofarm = true
-                            wait(0.1)
+                            game:GetService("ReplicatedStorage").Knit.Services.interactService.RF.GetOptionData:InvokeServer(unpack(args))
+                            task.wait(2)
+                            --getgenv().Autofarm = true
                             autoFarmHanamato(tool2use)
+                            end
                         end
                     end
                 end
